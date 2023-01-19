@@ -1,0 +1,50 @@
+Quand une Nouvelle SESSION est créée, offrez automatiquement 3 cours (FRA001, MAT001, ANG001) et 
+éliminez ces 3 classes de la liste des classes à offrir. OK DONE!
+
+URGENT: Add schedule to list of classes in InfoEtudiants.aspx OK DONE!
+
+1. Add balance in Receipt.
+
+2. Le cours doit inclure l'horaire pour être choisi convenablement pour l'enregistrement (URGENCE) - OK DONE (Add keys/Indexes in Production CoursOfferts table: 
+	Unique NumeroCours, ProfesseurID, HoraireID, SessionID)
+	Aussi quand le Tableur est généré (Par Cours et Horaire) - OK DONE
+
+3. Change NotePassage in CoursOfferts et CoursPris surtout pour examen Entrée afin que les étudiants puissent avoir accès 
+	aux cours exigeant une note de passage pour les cours pré-requis. Les examens d'entrée sont considérés comme des cours pré-requis.
+	Ou bien changer la logique qui met la note de passage dans CoursPris ou Changer note de passage dans CoursPris as well quand changement
+
+4. Prevent "Inscriptions" Duplicates - OK DONE IN Database
+
+5. Possibilité de changer la note de l'étudiant (Store old score in other table for accountabilité)
+
+6. Enlever un étudiant d'une classe (un-bill). OK DONE!
+
+7. Compute GPA: La moyenne cumulative est calculée en multipliant le nombre de crédits de chaque cours par le nombre de points obtenus et en divisant la somme des produits ainsi obtenus par le nombre total de crédits contribuant à cette moyenne. 
+Seulement la valeur numérique des lettres suivantes, rentre dans le calcul de la moyenne cumulative.  
+A+ = 4,3; A = 4,0; A- = 3,7; B+ = 3,3; B = 3,0; B- = 2,7; C+ = 2,3; C = 2,0; C- = 1,7; D+ = 1,3; D = 1,0 ; D- = 0,7 E = 0. OK DONE !!!!
+
+8. Add Scanning Feature of High School Diploma to Management System.
+
+9. Waiver: Possibility for waiver for students so they can take the next class. (In Table already) OK
+
+10. List of required class per discipline et Page to change discipline of student
+
+11. Mass Email: By Major or By Class.
+
+12. Rapports comptables pour controle
+	a. Etudiants avec balance negative
+	b. Liste des cours et montants facturés afin de voir si la facturation est correcte
+
+13. Late fees: Device scheme to bill. (Add due date to Bill).
+	
+14. Add Buttons to ListEtudiants.aspx to filter with LastName starting from A-B, C-D, E-K, L-Q, R-Z
+
+15. Full Accounting in System: Professors pays, all expenses, etc so we can have a full monthly report.
+
+16. Prevent students from registering for 5th, 6th class if average is too low.
+
+Bug: EMail attachment 
+	1- Sending the same file a 2nd time crashes the process.
+	2- Free screen when sending email (put it in thread) 
+
+Check: SessionTime (C:\Extras\Tech\CCPAP\SessionTime.docx)

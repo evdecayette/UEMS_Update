@@ -1,0 +1,61 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>
+
+</title><link href="PrintStyleFormat.css" type="text/css" media="print" rel="stylesheet" />  
+    <base target='_self'/>
+    <script>
+        function printDiv(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+
+			printContents.print();
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+        }
+    </script>
+</head>
+<body style="margin-bottom:10;margin-left:10;margin-right:10;margin-top:10;" ms_positioning="GridLayout">
+
+ <form method="post">
+    <input class="print" id='Button1' type='button' value='Print' onclick="printDiv('AImprimer')" style='border-radius:20px;border:1px;width:130px; height:30px;'/>
+	<div id='AImprimer'>
+		<div style='height:50px;'>
+			<br/>
+		</div>
+		<div>
+			<hr style='background-color:#669999;' size='3'>
+			<p style='text-align:center;font-size:20px'>Université Espoir</p>
+			<p style='text-align:center;'><img src='images/logo.jpg' alt='Imprimer Reçu'></p>
+			<p style='text-align:center;font-size:14px'>Reçu Paiement</p>
+			<hr style='background-color:#669999;' size='3'>
+		</div>
+		<div style='height:50px;'>
+			<br/>
+		</div>		
+		<div style='border: 1px solid; border-radius: 20px;'>			
+			<table style='font-size:14px;padding:15px'>				
+				<TR><TD style='font-weight:bold;width:40%'>Numéro du Reçu</TD><TD>76B40CAB-4266-49F6-885F-72B12EC0DAB4</TD></TR>
+				<TR><TD colspan='2'></TD></TR>
+				<TR><TD style='font-weight:bold;'>Nom</TD><TD>Alcima</TD></TR>
+				<TR><TD colspan='2'></TD></TR>
+				<TR><TD style='font-weight:bold;'>Prénom</TD><TD>Weed James</TD></TR>
+				<TR><TD colspan='2'></TD></TR>
+				<TR><TD style='font-weight:bold;'>NIF/Matricule</TD><TD>002-268-759-4</TD></TR>
+				<TR><TD colspan='2'></TD></TR>
+				<TR><TD style='font-weight:bold;'>Montant</TD><TD>1000.0000</TD></TR>
+				<TR><TD colspan='2'></TD></TR>
+				<TR><TD style='font-weight:bold;'>Date</TD><TD>9/1/2016 12:00:00 AM</TD></TR>
+				<TR><TD colspan='2'></TD></TR>
+				<TR><TD style='font-weight:bold;'>Description</TD><TD>Frais Mensuel</TD></TR>					
+			</TABLE>
+		</div>
+    </div>
+        
+    </form>
+</body>
+</html>

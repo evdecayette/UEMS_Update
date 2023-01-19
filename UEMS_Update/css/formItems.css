@@ -1,0 +1,260 @@
+﻿
+.button-wait {
+    background-image: url(../images/loader.gif); /* 16px x 16px */
+    background-color: transparent; /* make the button transparent */
+    background-repeat: no-repeat; /* make the background image appear only once */
+    /*background-position: 0px 0px;   equivalent to 'top left' */
+    background-position: center;
+    border: none; /* assuming we don't want any borders */
+    cursor: pointer; /* make the cursor like hovering over an <a> element */
+    height: 16px; /* make this the size of your image */
+    padding-left: 16px; /* make text start to the right of the image */
+    vertical-align: middle; /* align the text vertically centered */
+    border-radius: 4px;
+    border: 1px solid blue;
+}
+    .modal
+    {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: black;
+        z-index: 99;
+        opacity: 0.8;
+        filter: alpha(opacity=80);
+        -moz-opacity: 0.8;
+        min-height: 100%;
+        width: 100%;
+    }
+
+    .loading
+    {
+        font-family: Arial;
+        font-size: 10pt;
+        border: 5px solid #67CFF5;
+        width: 200px;
+        height: 100px;
+        display: none;
+        position: fixed;
+        background-color: White;
+        z-index: 999;
+    }
+/* additions
+    */
+form div.dynamicdate{ /* div container for each form field with pop up label */
+  display: block;
+  margin: 10px;
+  font: 16px;
+  position: relative;
+}
+
+
+form div.dynamicdate input[type="text"]{
+  width: 160px;
+  padding: 10px;
+  border: 1px solid #c3c3c3;
+  border-radius: 7px;
+}
+
+form div.dynamicdate > *:focus{ /* when user focuses on child element inside div.dynamiclabel */
+  border: 1px solid #45bcd2;
+  box-shadow: 0 0 8px 2px #98d865;
+}
+
+form div.dynamicdate > *:focus + label{ /* label style when user focuses on child element inside div.dynamiclabel */
+  opacity: 1;
+  z-index:100;
+  top: -40px; /* Post top position of label on focus relative to dynamiclabel container */
+  -ms-transform: rotate(-3deg);
+  -moz-transform: rotate(-3deg);
+  -webkit-transform: rotate(-3deg);
+  transform: rotate(-3deg);
+}
+
+/*
+    Fin additions de Label pour date*/
+
+form div.dynamiclabel{ /* div container for each form field with pop up label */
+  display: block;
+  margin: 10px;
+  font: 16px;
+  position: relative;
+}
+
+
+form div.dynamiclabel input[type="text"], form div.dynamiclabel textarea{
+  width: 320px;
+  padding: 10px;
+  border: 1px solid #c3c3c3;
+  border-radius: 7px;
+}
+
+form div.dynamiclabel textarea{
+  height: 200px;
+}
+
+form div.dynamiclabel label{ /* pop up label style */
+  position: absolute;
+  left: 0;
+  background: lightyellow;
+  border: 1px solid yellow;
+  border-radius: 2px;
+  padding: 3px 10px;
+  box-shadow: 4px 1px 5px gray;
+  font-weight: bold;
+  -webkit-backface-visibility: hidden;
+  top: 10px; /* initial top position of label relative to dynamiclabel container */
+  -moz-transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  -webkit-transition: all 0.4s ease-in-out; /* Safari doesn't seem to support cubic-bezier values beyond 0 to 1, so use keyword value instead */
+  -o-transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  opacity: 0;
+  z-index: -1;
+}
+
+form div.dynamiclabel > *:focus{ /* when user focuses on child element inside div.dynamiclabel */
+  border: 1px solid #45bcd2;
+  box-shadow: 0 0 8px 2px #98d865;
+}
+
+form div.dynamiclabel > *:focus + label{ /* label style when user focuses on child element inside div.dynamiclabel */
+  opacity: 1;
+  z-index:100;
+  top: -40px; /* Post top position of label on focus relative to dynamiclabel container */
+  -ms-transform: rotate(-3deg);
+  -moz-transform: rotate(-3deg);
+  -webkit-transform: rotate(-3deg);
+  transform: rotate(-3deg);
+}
+
+/* ========================================================================== */
+form div.dynamicbutton { /* div container for each form field with pop up label */
+  display: block;
+  position: relative;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+form div.dynamicbutton input[type="submit"]{
+  width: 220px;
+  padding: 10px;                /* espace entre contenu et récipient (container) */
+  border: 1px solid #c3c3c3;    /* ligne et couleur */
+  border-radius: 7px;           /* Round Corner */
+  font-weight: bold;
+}
+
+form div.dynamicbutton label{ /* pop up label style */
+  position: absolute;
+  left: 0;
+  background: lightyellow;
+  border: 1px solid yellow;
+  border-radius: 2px;
+  padding: 3px 10px;
+  box-shadow: 4px 1px 5px gray;
+  font-weight: bold;
+  -webkit-backface-visibility: hidden;
+  top: 10px; /* initial top position of label relative to dynamicbutton container */
+  -moz-transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  -webkit-transition: all 0.4s ease-in-out; /* Safari doesn't seem to support cubic-bezier values beyond 0 to 1, so use keyword value instead */
+  -o-transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  opacity: 0;
+  z-index: -1;
+}
+
+form div.dynamicbutton > *:hover{ /* when user passes the mouse over */
+  border: 1px solid #45bcd2;
+  box-shadow: 0 0 8px 2px #98d865;
+}
+
+form div.dynamicbutton > *:hover + label{ /* label style when user focuses on child element inside div.dynamicbutton */
+  opacity: 1;
+  z-index:100;
+  top: -35px; /* Post top position of label on focus relative to dynamicbutton container */
+  -ms-transform: rotate(-3deg);
+  -moz-transform: rotate(-3deg);
+  -webkit-transform: rotate(-3deg);
+  transform: rotate(-3deg);
+}
+
+/* ==================================================================================== */
+
+form div.dynamiSelect{  /* div container for each form field with pop up label */
+  display: block;
+  margin: 5px;
+  font: 16px;           /* font andedan textbox ou textarea yo */
+  position: relative;   /* kote elemen ye a se la pop up la ap fèt */
+}
+
+form div.dynamiSelect select {
+  /* hauteur de la textarea height: 200px; */
+  border: 1px solid #c3c3c3;        /* ligne et couleur */
+  border-radius: 7px;               /* Round Corner */
+  box-shadow: 0 0 8px 2px #45bcd2;  /* blue shadow */
+}
+
+form div.dynamiSelect > option {
+  display: block;
+  margin: 5px;
+  font: 16px;                       /* font andedan textbox ou textarea yo */
+  position: relative;               /* kote elemen ye a se la pop up la ap fèt */
+  width: 320px;
+  height: 30px;                     /* hauteur de la textarea height: 200px; */
+  border: 1px solid #c3c3c3;        /* ligne et couleur */
+  border-radius: 7px;               /* Round Corner */
+  box-shadow: 0 0 8px 2px #45bcd2;  /* blue shadow */
+}
+
+/* Correction dynamiSelect to dynamicSelect - old left for backward compatiblity */
+form div.dynamicSelect{  /* div container for each form field with pop up label */
+  display: block;
+  margin: 5px;
+  font: 16px;           /* font andedan textbox ou textarea yo */
+  position: relative;   /* kote elemen ye a se la pop up la ap fèt */
+}
+
+form div.dynamicSelect select {
+  /* hauteur de la textarea height: 200px; */
+  border: 1px solid #c3c3c3;        /* ligne et couleur */
+  border-radius: 7px;               /* Round Corner */
+  box-shadow: 0 0 8px 2px #45bcd2;  /* blue shadow */
+}
+
+form div.dynamicSelect > option {
+  display: block;
+  margin: 5px;
+  font: 16px;                       /* font andedan textbox ou textarea yo */
+  position: relative;               /* kote elemen ye a se la pop up la ap fèt */
+  width: 320px;
+  height: 30px;                     /* hauteur de la textarea height: 200px; */
+  border: 1px solid #c3c3c3;        /* ligne et couleur */
+  border-radius: 7px;               /* Round Corner */
+  box-shadow: 0 0 8px 2px #45bcd2;  /* blue shadow */
+}
+
+
+/* ==================================================================================== */
+.GenericObject {
+  display: block;
+  margin: 5px;
+  font: 16px;                       /* font andedan textbox ou textarea yo */
+  position: relative;               /* kote elemen ye a se la pop up la ap fèt */
+  width: 320px;
+  height: 30px;                     /* hauteur de la textarea height: 200px; */
+  border: 1px solid #c3c3c3;        /* ligne et couleur */
+  border-radius: 7px;               /* Round Corner */
+  box-shadow: 0 0 8px 2px #45bcd2;  /* blue shadow */
+}
+
+.GenericObjectMenu {
+  display: block;
+  margin: 5px;
+  font: 16px;                       /* font andedan textbox ou textarea yo */
+  position: relative;               /* kote elemen ye a se la pop up la ap fèt */
+  width: 200px;
+  height: 30px;                     /* hauteur de la textarea height: 200px; */
+  border: 1px solid #c3c3c3;        /* ligne et couleur */
+  border-radius: 7px;               /* Round Corner */
+  box-shadow: 0 0 8px 2px #45bcd2;  /* blue shadow */
+}
