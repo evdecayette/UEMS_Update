@@ -12,7 +12,7 @@ public partial class FactureManuelle : System.Web.UI.Page
 {
     String sPersonneID = String.Empty;
     List<Obligation> LesObligations = new List<Obligation>();
-
+    string ConnectionString = XCryptEngine.ConnectionStringEncryption.Decrypt(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
     protected void Page_Load(object sender, EventArgs e)
     {
         // Get PersonneID 
@@ -39,7 +39,7 @@ public partial class FactureManuelle : System.Web.UI.Page
     {
         String returnedString = String.Empty;
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             // Loop through all records
             try
@@ -71,7 +71,7 @@ public partial class FactureManuelle : System.Web.UI.Page
     {
         lblError.Text = "";
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             try
             {
@@ -141,7 +141,7 @@ public partial class FactureManuelle : System.Web.UI.Page
         try
         {
             DB_Access db = new DB_Access();
-            using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+            using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
             {
                 String sSql = @"SELECT Description, Code, Montant FROM Obligations ORDER BY Code, Description";
 

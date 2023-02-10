@@ -11,6 +11,8 @@ using System.Diagnostics;
 
 public partial class AdminPages_SetupSession : System.Web.UI.Page
 {
+    string ConnectionString = XCryptEngine.ConnectionStringEncryption.Decrypt(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -18,7 +20,7 @@ public partial class AdminPages_SetupSession : System.Web.UI.Page
             String sGroup = ConfigurationManager.AppSettings["AdminGroup"].ToString();
 
             DB_Access db = new DB_Access();
-            using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+            using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -54,7 +56,7 @@ public partial class AdminPages_SetupSession : System.Web.UI.Page
         String sessionCourante = String.Empty, sDateDebut, sDateFin;
 
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             try
             {
@@ -136,7 +138,7 @@ public partial class AdminPages_SetupSession : System.Web.UI.Page
         try
         {
             int SessionCouranteID = 0;
-            using (SqlConnection myConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString))
+            using (SqlConnection myConnection = new SqlConnection(ConnectionString))
             {
                 SqlCommand cmdUpdateLesSessions = new SqlCommand();
                 SqlCommand cmdUpdateCoursOfferts = new SqlCommand();
@@ -190,7 +192,7 @@ public partial class AdminPages_SetupSession : System.Web.UI.Page
                 // ProfesseurID = 3   -    HoraireID = 11        -   NotePassage = 65
                 // Insert 3 records to LesSessions
                 DB_Access db = new DB_Access();
-                using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+                using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
                 {
                     try
                     {

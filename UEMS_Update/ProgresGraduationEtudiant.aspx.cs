@@ -6,6 +6,7 @@ using System.Diagnostics;
 
 public partial class ProgresGraduationEtudiant : System.Web.UI.Page
 {
+    string ConnectionString = XCryptEngine.ConnectionStringEncryption.Decrypt(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -43,7 +44,7 @@ public partial class ProgresGraduationEtudiant : System.Web.UI.Page
         int iYear;
 
         // Get Discipline de l'étudiant
-        using (SqlConnection sqlConn0 = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn0 = new SqlConnection(ConnectionString))
         {
             try
             {
@@ -64,7 +65,7 @@ public partial class ProgresGraduationEtudiant : System.Web.UI.Page
         //List<string> keys = new List<string>(dictionaryNotes.Keys);
 
         // Get Cours Pris par l'étudiant: Relevé de Notes
-        using (SqlConnection sqlConn1 = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn1 = new SqlConnection(ConnectionString))
         {
             try
             {
@@ -120,7 +121,7 @@ public partial class ProgresGraduationEtudiant : System.Web.UI.Page
         }
 
         // Get liste de Cours Programme/Discipline
-        using (SqlConnection sqlConn2 = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn2 = new SqlConnection(ConnectionString))
         {
             try
             {

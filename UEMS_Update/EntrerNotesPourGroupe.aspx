@@ -31,8 +31,24 @@
             <div class='col-lg-12'>
                 <asp:GridView ID="gvEtudiants" runat="server" DataKeyNames="PersonneID" AutoGenerateColumns="False" 
                     ShowFooter="false" AllowPaging="false" class='table table-striped table-bordered table-hover' 
-                    EnablePersistedSelection="True" ShowHeaderWhenEmpty="True" width='100%' OnRowDataBound="gvEtudiants_RowDataBound" >
+                    EnablePersistedSelection="True" ShowHeaderWhenEmpty="True" width='100%' 
+                    OnRowDataBound="gvEtudiants_RowDataBound"
+                    OnPageIndexChanging="gvEtudiants_PageIndexChanging"
+                    OnRowCancelingEdit="gvEtudiants_RowCancelingEdit"
+                    OnRowEditing="gvEtudiants_RowEditing" 
+                    OnRowUpdating="gvEtudiants_RowUpdating">
                             <Columns>
+                                <asp:TemplateField HeaderText="Action" ItemStyle-CssClass="center">
+                                    <EditItemTemplate>
+                                        <asp:Button ID="ButtonUpdate" runat="server" Width="48%" class="btn btn-success m-5" CommandName="Update"  Text="Update"  />
+                                        <asp:Button ID="ButtonCancel" runat="server" Width="48%" class="btn btn-warning" CommandName="Cancel"  Text="Cancel" />
+                                    </EditItemTemplate>
+                                    <ItemTemplate>
+                                        <asp:Button ID="ButtonEdit" runat="server" CommandName="Edit" class="btn btn-info" Text="Editez la Note"  />
+                                    </ItemTemplate>
+                                   
+                                 </asp:TemplateField>
+
                                 <asp:TemplateField HeaderText="Note sur 100" ItemStyle-CssClass="center">
                                     <ItemTemplate>
                                     <asp:TextBox ID="txtNote" runat="server" Text='<%# Bind("NoteSurCent") %>'></asp:TextBox>
@@ -69,7 +85,8 @@
                                 </asp:TemplateField>
                                  <asp:TemplateField  HeaderText="">
                                     <ItemTemplate>
-                                        <asp:Label ID="lblCoursPrisID" runat="server" Text='<%# Bind("CoursPrisID") %>' Visible="false"></asp:Label>
+                                        <asp:Label ID="lblCoursPrisID" Width="0%" runat="server" Text='<%# Bind("CoursPrisID") %>' Visible="false"></asp:Label>
+                                        <asp:Label ID="lblPersonneID" Width="0%" runat="server" Text='<%# Bind("PersonneID") %>' Visible="false"></asp:Label>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>

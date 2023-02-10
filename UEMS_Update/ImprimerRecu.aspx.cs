@@ -13,7 +13,7 @@ public partial class ImprimerRecu : System.Web.UI.Page
 {
     String sMontantRecuID = String.Empty;
     String sPersonneID = String.Empty;
-
+    string ConnectionString = XCryptEngine.ConnectionStringEncryption.Decrypt(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -44,7 +44,7 @@ public partial class ImprimerRecu : System.Web.UI.Page
     {
         String sRetString = String.Empty;
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             sRetString += String.Format("<table style='font-size:14px;padding:15px'>");
 

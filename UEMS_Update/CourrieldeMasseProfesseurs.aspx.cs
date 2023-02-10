@@ -12,6 +12,7 @@ using System.Text;
 
 public partial class CourrieldeMasseProfesseurs : System.Web.UI.Page
 {
+    string ConnectionString = XCryptEngine.ConnectionStringEncryption.Decrypt(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
     protected void Page_Load(object sender, EventArgs e)
     {
 
@@ -33,7 +34,7 @@ public partial class CourrieldeMasseProfesseurs : System.Web.UI.Page
         {
             try
             {
-                SqlConnection myConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
+                SqlConnection myConnection = new SqlConnection(ConnectionString);
                 String sSql = string.Format("SELECT ProfesseurID, UPPER(Nom) + ',  ' + Prenom AS NomComplet, ISNULL(LOWER(Email), '') AS Email " +
                     " FROM Professeurs WHERE Actif = 1 ORDER BY Nom, Prenom");
 
@@ -102,7 +103,7 @@ public partial class CourrieldeMasseProfesseurs : System.Web.UI.Page
         //sbMessage.Replace("&lt;/i&gt;", "</i>");
 
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {            
             try
             {

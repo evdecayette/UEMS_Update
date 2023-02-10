@@ -16,6 +16,7 @@ public partial class AdminPages_AddEditCours : System.Web.UI.Page
     protected static String errorMessage = String.Empty;
     protected static bool processSuccess = false;
     protected static bool updateCours = false;
+    string ConnectionString = XCryptEngine.ConnectionStringEncryption.Decrypt(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -23,7 +24,8 @@ public partial class AdminPages_AddEditCours : System.Web.UI.Page
         {
             String sGroup = ConfigurationManager.AppSettings["AdminGroup"].ToString();
             DB_Access db = new DB_Access();
-            using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+
+            using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -54,7 +56,7 @@ public partial class AdminPages_AddEditCours : System.Web.UI.Page
         //btnSauvegarder.Enabled = false;
         try
         {
-            SqlConnection myConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
+            SqlConnection myConnection = new SqlConnection(ConnectionString);
             String sSql = @"SELECT 'AAA000' AS NomCours, 'AAA001' AS NumeroCours,'Choisissez un Pré-Réquis si Nécessaire !' AS LesDeux " 
                 + " UNION SELECT NomCours, NumeroCours, NomCours + ' (' + NumeroCours + ')' AS LesDeux FROM Cours " +
                 " WHERE Actif = 1 AND NumeroCours IN (SELECT CO.NumeroCours FROM CoursOfferts CO, LesSessions LS WHERE CO.SessionID = LS.SessionID AND LS.SessionCourante = 1) ORDER BY NumeroCours";
@@ -104,7 +106,7 @@ public partial class AdminPages_AddEditCours : System.Web.UI.Page
 
         String erreurString = String.Empty;
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {        
             try
             {
@@ -275,7 +277,7 @@ public partial class AdminPages_AddEditCours : System.Web.UI.Page
             if (ddlCoursPreRequis.SelectedIndex >= 0)
             {
                 DB_Access db = new DB_Access();
-                using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+                using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
                 {
                     try
                     {

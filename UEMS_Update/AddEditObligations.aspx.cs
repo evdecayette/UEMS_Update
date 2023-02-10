@@ -11,6 +11,7 @@ using System.Diagnostics;
 
 public partial class AdminPages_AddEditObligations : System.Web.UI.Page
 {
+    string ConnectionString = XCryptEngine.ConnectionStringEncryption.Decrypt(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -19,7 +20,7 @@ public partial class AdminPages_AddEditObligations : System.Web.UI.Page
             string sObligationID = string.Empty;
             String sGroup = ConfigurationManager.AppSettings["AdminGroup"].ToString();
             DB_Access db = new DB_Access();
-            using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+            using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -69,7 +70,7 @@ public partial class AdminPages_AddEditObligations : System.Web.UI.Page
     protected void RemplirInfoPourCorrection(String sObligationID)
     {
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             try
             {
@@ -103,7 +104,7 @@ public partial class AdminPages_AddEditObligations : System.Web.UI.Page
         lblError.Text = String.Empty;
 
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             try
             {
@@ -153,7 +154,7 @@ public partial class AdminPages_AddEditObligations : System.Web.UI.Page
     {
         lblError.Text = "";
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             try
             {

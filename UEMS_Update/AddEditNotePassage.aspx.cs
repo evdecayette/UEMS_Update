@@ -11,6 +11,7 @@ using System.Diagnostics;
 
 public partial class AddEditNotePassage : System.Web.UI.Page
 {
+    string ConnectionString = XCryptEngine.ConnectionStringEncryption.Decrypt(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
     protected void Page_Load(object sender, EventArgs e)
     {
 
@@ -18,7 +19,7 @@ public partial class AddEditNotePassage : System.Web.UI.Page
         {
             String sGroup = ConfigurationManager.AppSettings["AdminGroup"].ToString();
             DB_Access db = new DB_Access();
-            using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+            using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -51,7 +52,7 @@ public partial class AddEditNotePassage : System.Web.UI.Page
         try
         {
             DB_Access db = new DB_Access();
-            using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+            using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
             {
                 sqlConn.Open();
                 String sSql = @"SELECT 'Choisissez un Cours' AS NomCours, -1 AS CoursOffertID, 'AAA000' AS NumeroCours " +
@@ -77,7 +78,7 @@ public partial class AddEditNotePassage : System.Web.UI.Page
     protected void ddlCoursOfferts_SelectedIndexChanged(object sender, EventArgs e)
     {
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             sqlConn.Open();
             txtNotePassage.Text = db.GetScalar(String.Format("SELECT NotePassage FROM CoursOfferts WHERE CoursOffertID = {0}", 
@@ -91,7 +92,7 @@ public partial class AddEditNotePassage : System.Web.UI.Page
     {
         lblError.ForeColor = System.Drawing.Color.Red;
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             string errorMessage = "";
             String csCoursOffertID, csNotePassage;

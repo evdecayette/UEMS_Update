@@ -11,6 +11,7 @@ using System.Data.SqlClient;
 
 public partial class Default2 : System.Web.UI.Page
 {
+    string ConnectionString = XCryptEngine.ConnectionStringEncryption.Decrypt(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -27,7 +28,7 @@ public partial class Default2 : System.Web.UI.Page
         btnEnvoyer.Enabled = false;
         try
         {
-            SqlConnection myConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
+            SqlConnection myConnection = new SqlConnection(ConnectionString);
             String sSql = @"SELECT 0 AS CoursOffertID, 'AAA' AS NumeroCours, 'Choisissez Un Cours' AS Description UNION " +
                 " SELECT CO.CoursOffertID AS ID, C.NumeroCours AS Cours, C.NumeroCours + ' - ' + NomCours + ' - ' + H.Jours + ' * ' +" + 
                 " H.HeureDebut + ' - ' + H.HeureFin + ' *' AS Description " +
@@ -73,7 +74,7 @@ public partial class Default2 : System.Web.UI.Page
         {
             try
             {
-                SqlConnection myConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
+                SqlConnection myConnection = new SqlConnection(ConnectionString);
                 String sSql = string.Format("SELECT CP.PersonneID, UPPER(Nom) + ',  ' + Prenom AS NomComplet, ISNULL(LOWER(Email), '') AS Email " +
                     " FROM Personnes P, CoursPris CP  " +
                     " WHERE P.PersonneID = CP.PersonneID AND CP.CoursOffertID = {0} ORDER BY Nom", ddlCoursOfferts.SelectedValue.ToString());

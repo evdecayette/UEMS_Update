@@ -11,6 +11,7 @@ using System.Diagnostics;
 
 public partial class EffacerMontantRecu : System.Web.UI.Page
 {
+    string ConnectionString = XCryptEngine.ConnectionStringEncryption.Decrypt(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
     protected void Page_Load(object sender, EventArgs e)
     {
         String sPersonneID = "", sMontantRecuID = "";
@@ -25,7 +26,7 @@ public partial class EffacerMontantRecu : System.Web.UI.Page
             SqlConnection sqlConn = null;
             SqlCommand SqlCmd;
 
-            sqlConn = new System.Data.SqlClient.SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString());
+            sqlConn = new System.Data.SqlClient.SqlConnection(ConnectionString);
             sqlConn.Open();
 
             SqlCmd = new SqlCommand();

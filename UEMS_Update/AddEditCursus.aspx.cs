@@ -7,13 +7,15 @@ using System.Web.UI.WebControls;
 
 public partial class AddEditCursus : System.Web.UI.Page
 {
+    string ConnectionString = XCryptEngine.ConnectionStringEncryption.Decrypt(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
             String sGroup = ConfigurationManager.AppSettings["AdminGroup"].ToString();
             DB_Access db = new DB_Access();
-            using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+            using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -44,7 +46,7 @@ public partial class AddEditCursus : System.Web.UI.Page
         lblError.Text = String.Empty;
         try
         {
-            SqlConnection myConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
+            SqlConnection myConnection = new SqlConnection(ConnectionString);
 
             String sSql = @"SELECT 0 AS DisciplineID, 'AA' AS DisciplineNom, ' Choisissez Discipline   ' AS Description " +
                 "UNION SELECT DisciplineID, DisciplineNom, ' ' + DisciplineNom + '   ' AS Description FROM Disciplines ORDER BY DisciplineNom";
@@ -73,7 +75,7 @@ public partial class AddEditCursus : System.Web.UI.Page
             return;
         try
         {
-            SqlConnection myConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
+            SqlConnection myConnection = new SqlConnection(ConnectionString);
             String sSql = String.Format("SELECT C.NumeroCours, C.NumeroSession, CO.NomCours, C.CursusID, C.DisciplineID " +
                 " FROM Cursus C, Cours CO WHERE C.NumeroCours = CO.NumeroCours AND  DisciplineID = {0} ORDER BY NumeroSession ", ddlDisciplines.SelectedValue.ToString());
             SqlDataAdapter da = new SqlDataAdapter(sSql, myConnection);
@@ -113,7 +115,7 @@ public partial class AddEditCursus : System.Web.UI.Page
             return;
         try
         {
-            SqlConnection myConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
+            SqlConnection myConnection = new SqlConnection(ConnectionString);
             String sSql = String.Format("SELECT NomCours, NumeroCours FROM Cours " +
                     " WHERE NumeroCours <> 'NOP' AND Actif = 1 AND ExamenEntree = 0 " +
                     " AND NumeroCours NOT IN (SELECT NumeroCours FROM Cursus WHERE DisciplineID = {0})" +
@@ -159,7 +161,7 @@ public partial class AddEditCursus : System.Web.UI.Page
         lblError.Text = String.Empty;
         String erreurString = String.Empty;
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             try
             {

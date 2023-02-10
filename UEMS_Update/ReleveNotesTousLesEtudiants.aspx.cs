@@ -13,6 +13,7 @@ public partial class ReleveNotesTousLesEtudiants : System.Web.UI.Page
 {
     String sSql = "";
     HashSet<Notation> getNotesScheme = null;
+    string ConnectionString = XCryptEngine.ConnectionStringEncryption.Decrypt(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -56,11 +57,11 @@ public partial class ReleveNotesTousLesEtudiants : System.Web.UI.Page
         string credits;
 
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             try
             {
-                using (SqlConnection sqlConn1 = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+                using (SqlConnection sqlConn1 = new SqlConnection(ConnectionString))
                 {
                     try
                     {

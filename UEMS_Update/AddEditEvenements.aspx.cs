@@ -10,6 +10,7 @@ using System.Configuration;
 using System.Diagnostics;
 public partial class AddEditEvenements : System.Web.UI.Page
 {
+    string ConnectionString = XCryptEngine.ConnectionStringEncryption.Decrypt(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -35,7 +36,7 @@ public partial class AddEditEvenements : System.Web.UI.Page
     protected void RemplirInfoPourCorrection(string sEventID)
     {
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             
 
@@ -83,7 +84,7 @@ public partial class AddEditEvenements : System.Web.UI.Page
 
         // Loop through all records
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {            
             try
             {
@@ -120,7 +121,7 @@ public partial class AddEditEvenements : System.Web.UI.Page
     protected void btnSauvegarder_Click(object sender, EventArgs e)
     {
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {            
             try
             {

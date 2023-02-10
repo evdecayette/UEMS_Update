@@ -11,6 +11,8 @@ using System.Data;
 
 public partial class Cursus : System.Web.UI.Page
 {
+    string ConnectionString = XCryptEngine.ConnectionStringEncryption.Decrypt(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -47,7 +49,7 @@ public partial class Cursus : System.Web.UI.Page
         DB_Access db = new DB_Access();
         if (DisciplineID != String.Empty)
         {
-            using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+            using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
             {
                 try
                 {

@@ -9,7 +9,7 @@ public partial class HoraireSessionCourante : System.Web.UI.Page
     String sPersonneID = "";
     String sSql = "";
     //HashSet<Notation> getNotesScheme = null;
-
+    string ConnectionString = XCryptEngine.ConnectionStringEncryption.Decrypt(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -41,7 +41,7 @@ public partial class HoraireSessionCourante : System.Web.UI.Page
         int creditsTotal = 0;
 
         string sDisciplineDeclaree;
-        using (SqlConnection sqlConn1 = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn1 = new SqlConnection(ConnectionString))
         {
             try
             {
@@ -57,7 +57,7 @@ public partial class HoraireSessionCourante : System.Web.UI.Page
         }
 
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             try
             {
@@ -94,6 +94,34 @@ public partial class HoraireSessionCourante : System.Web.UI.Page
                         creditsTotal += int.Parse(dtTemp["Credits"].ToString());
                     }
                     while (dtTemp.Read());
+                }
+                else
+                {// Write an explicit message when the selected student is not registered for the current session(Decayette's Codes)
+                    dtTemp.Close();
+                    string sql =String.Format("Select Nom, Prenom from Personnes Where PersonneID = '{0}'",sPersonneID);
+                    
+                    String sNomComplet = "";
+                    try
+                    {
+                        sqlConn.Open();
+                        SqlDataReader dt = db.GetDataReader(sql, sqlConn);
+
+                        if (dt.Read())
+                        {
+                            sNomComplet = dt["Prenom"].ToString() + " " + dt["Nom"].ToString().ToUpper();
+                            do
+                            {
+                                Response.Write(string.Format("Etudiant {0} N'inscrit pas Dans la Session Courante...!", sNomComplet));
+                                return sRetString;
+                            }
+                            while (dt.Read());
+                        }
+                    }
+                    catch(Exception ex)
+                    {
+                        Debug.WriteLine(ex);
+                        sRetString += "<br> ERREUR 2 : ProcessInfo!";
+                    }
                 }
             }
             catch (Exception ex)

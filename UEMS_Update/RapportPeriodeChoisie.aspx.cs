@@ -11,6 +11,7 @@ using System.Diagnostics;
 
 public partial class RapportPeriodeChoisie : System.Web.UI.Page
 {
+    string ConnectionString = XCryptEngine.ConnectionStringEncryption.Decrypt(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
     protected void Page_Load(object sender, EventArgs e)
     {
 
@@ -25,7 +26,7 @@ public partial class RapportPeriodeChoisie : System.Web.UI.Page
         String sRetString = String.Empty;
         Double dMontantTotal = 0.0;
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             try
             {

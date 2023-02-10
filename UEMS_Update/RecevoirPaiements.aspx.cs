@@ -12,6 +12,7 @@ using System.Diagnostics;
 public partial class RecevoirPaiements : System.Web.UI.Page
 {
     String sPersonneID = String.Empty;
+    string ConnectionString = XCryptEngine.ConnectionStringEncryption.Decrypt(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -69,7 +70,7 @@ public partial class RecevoirPaiements : System.Web.UI.Page
         String returnedString = String.Empty;
         String localPersonneID = txtPersonneID.Text;
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             returnedString += String.Format("<table class='table table-striped table-bordered table-hover'>");
             returnedString += String.Format("<thead><tr><th><a href='ImprimerRecuTout.aspx?PersonneID={0}'>Imprimer Tout</a></th><th>Description</th><th>Montant</th><th>Date</th></thead><tbody>", localPersonneID);
@@ -126,7 +127,7 @@ public partial class RecevoirPaiements : System.Web.UI.Page
         returnedString += @"<thead><tr><th>Description</th><th>Montant</th><th>Date</th></thead><tbody>";
 
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             try
             {
@@ -162,7 +163,7 @@ public partial class RecevoirPaiements : System.Web.UI.Page
         try
         {
             DB_Access db = new DB_Access();
-            using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+            using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
             {
                 sqlConn.Open();
                 String sSql = @"SELECT 'Choisissez une Description' AS Description, 'AAA' AS Code UNION " +
@@ -188,7 +189,7 @@ public partial class RecevoirPaiements : System.Web.UI.Page
         lblError.Text = "";
 
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             try
             {
@@ -275,7 +276,7 @@ public partial class RecevoirPaiements : System.Web.UI.Page
     protected void ddlObigations_SelectedIndexChanged(object sender, EventArgs e)
     {
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             try
             {

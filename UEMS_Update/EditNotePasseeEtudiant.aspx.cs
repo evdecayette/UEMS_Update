@@ -12,6 +12,7 @@ using System.Threading;
 
 public partial class EditNotePasseeEtudiant : System.Web.UI.Page
 {
+    string ConnectionString = XCryptEngine.ConnectionStringEncryption.Decrypt(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -29,7 +30,7 @@ public partial class EditNotePasseeEtudiant : System.Web.UI.Page
 
         try
         {
-            SqlConnection myConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
+            SqlConnection myConnection = new SqlConnection(ConnectionString);
             String sSql = String.Format("SELECT NoteSurCent, CP.NumeroCours + ' - ' + NomCours AS NumeroCours, CoursOffertID, NotePassage, " +  
                 "CoursPrisID FROM CoursPris CP, Cours C WHERE CP.NumeroCours = C.NumeroCours AND PersonneID = '{0}' AND NoteSurCent = 0 AND Waiver = 0", sPersonneID);
 
@@ -53,7 +54,7 @@ public partial class EditNotePasseeEtudiant : System.Web.UI.Page
     {
         String returnedString = String.Empty;
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             try
             {
@@ -87,7 +88,7 @@ public partial class EditNotePasseeEtudiant : System.Web.UI.Page
         lblError.Text = "Patientez svp ...";
         Thread.Sleep(10);
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             try
             {

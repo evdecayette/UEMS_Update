@@ -6,6 +6,7 @@ using System.Diagnostics;
 
 public partial class ListeEtudiantsParCours : System.Web.UI.Page
 {
+    string ConnectionString = XCryptEngine.ConnectionStringEncryption.Decrypt(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -22,7 +23,7 @@ public partial class ListeEtudiantsParCours : System.Web.UI.Page
         DateTime sSessionStartDate = DateTime.Now, sSessionEndDate = DateTime.Now;
 
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn0 = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn0 = new SqlConnection(ConnectionString))
         {
             try
             {
@@ -36,7 +37,7 @@ public partial class ListeEtudiantsParCours : System.Web.UI.Page
             }
         }
 
-            using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+            using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             try
             {

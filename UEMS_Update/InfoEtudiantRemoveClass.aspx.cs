@@ -15,11 +15,12 @@ public partial class InfoEtudiantRemoveClass : System.Web.UI.Page
     String sCoursPrisID = String.Empty;
     String sNumeroCours = String.Empty;
     String sCoursOffertID = String.Empty;
+    string ConnectionString = XCryptEngine.ConnectionStringEncryption.Decrypt(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
 
     protected void Page_Load(object sender, EventArgs e)
     {
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             try
             {
@@ -59,7 +60,7 @@ public partial class InfoEtudiantRemoveClass : System.Web.UI.Page
 
                 SqlTransaction transaction = null;
 
-                SqlConnection myConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
+                SqlConnection myConnection = new SqlConnection(ConnectionString);
                 SqlCommand cmdInsert = new SqlCommand();
                 SqlCommand cmdFactureNegative = new SqlCommand();
                 SqlCommand cmdDelete = new SqlCommand();

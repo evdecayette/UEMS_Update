@@ -11,6 +11,7 @@ using System.Configuration;
 
 public partial class AdminPages_ChoisirCoursPourSession : System.Web.UI.Page
 {
+    string ConnectionString = XCryptEngine.ConnectionStringEncryption.Decrypt(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -18,7 +19,7 @@ public partial class AdminPages_ChoisirCoursPourSession : System.Web.UI.Page
 
             String sGroup = ConfigurationManager.AppSettings["AdminGroup"].ToString();
             DB_Access db = new DB_Access();
-            using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+            using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
             {
                 try
                 {
@@ -49,7 +50,7 @@ public partial class AdminPages_ChoisirCoursPourSession : System.Web.UI.Page
         //btnSauvegarder.Enabled = false;
         try
         {
-            SqlConnection myConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
+            SqlConnection myConnection = new SqlConnection(ConnectionString);
             //String sSql = @"SELECT NomCours, NumeroCours FROM Cours " +
             //    " WHERE NumeroCours <> 'NOP' AND NumeroCours NOT IN (SELECT CO.NumeroCours FROM CoursOfferts CO, LesSessions LS WHERE CO.SessionID = LS.SessionID AND LS.SessionCourante = 1) ORDER BY NumeroCours";
             String sSql = @"SELECT NomCours + '  (' + CoursPreRequis + ')' AS NomCours, NumeroCours FROM Cours " +
@@ -76,7 +77,7 @@ public partial class AdminPages_ChoisirCoursPourSession : System.Web.UI.Page
         //btnSauvegarder.Enabled = false;
         try
         {
-            using (SqlConnection myConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString))
+            using (SqlConnection myConnection = new SqlConnection(ConnectionString))
             {
                 String sSql = @"SELECT C.NumeroCours, C.NumeroCours + ' - ' + NomCours + ' - ' + H.Jours + ' * ' + H.HeureDebut + ' - ' + H.HeureFin + ' *  (' + CoursPreRequis + ') ' + Isnull(H.Remarque, '') AS Description " +
                     " FROM CoursOfferts CO, Cours C, Horaires H  WHERE CO.NumeroCours = C.NumeroCours AND CO.HoraireID = H.HoraireID AND CO.Actif = 1  AND C.ExamenEntree = 0 " +
@@ -102,7 +103,7 @@ public partial class AdminPages_ChoisirCoursPourSession : System.Web.UI.Page
             // Fill the lign detail dropdown box
             if (e.Row.RowType == DataControlRowType.Pager || e.Row.RowType == DataControlRowType.DataRow)
             {
-                SqlConnection myConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
+                SqlConnection myConnection = new SqlConnection(ConnectionString);
                 String sSql = @" SELECT 'Choisissez le Professeur' AS NomComplet, 0 AS ProfesseurID, 'AAA' AS Prenom " +
                     " UNION SELECT Prenom + ' ' + Nom AS NomComplet, ProfesseurID, Prenom FROM Professeurs WHERE Actif = 1 ORDER BY Prenom";
 
@@ -155,7 +156,7 @@ public partial class AdminPages_ChoisirCoursPourSession : System.Web.UI.Page
         lblError.Text = String.Empty;
         String erreurString = String.Empty;
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             try
             {
@@ -164,7 +165,7 @@ public partial class AdminPages_ChoisirCoursPourSession : System.Web.UI.Page
                 SqlParameter ParamProfesseurID = new SqlParameter("@ProfesseurID", SqlDbType.Int);
                 SqlParameter ParamHoraireID = new SqlParameter("@HoraireID", SqlDbType.Int);
                 SqlParameter ParamSessionID = new SqlParameter("@SessionID", SqlDbType.Int);
-                using (SqlConnection sqlConn1 = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+                using (SqlConnection sqlConn1 = new SqlConnection(ConnectionString))
                 {
                     try
                     {

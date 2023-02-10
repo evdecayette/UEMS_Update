@@ -8,6 +8,7 @@ using System.Diagnostics;
 public partial class InfoEtudiant : System.Web.UI.Page
 {
     String sPersonneID = String.Empty;
+    string ConnectionString = XCryptEngine.ConnectionStringEncryption.Decrypt(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -34,7 +35,8 @@ public partial class InfoEtudiant : System.Web.UI.Page
                 //Permission
                 String sGroup = ConfigurationManager.AppSettings["AdminGroup"].ToString();
                 DB_Access db = new DB_Access();
-                using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+
+                using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
                 {
                     sqlConn.Open();
                     if (db.isCurrentWindowsInThisGroup(sGroup) || (db.IsCustomAdminMember(db.GetWindowsUser(), sqlConn)))
@@ -75,7 +77,7 @@ public partial class InfoEtudiant : System.Web.UI.Page
     {
         String returnedString = String.Empty;
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             // Loop through all records
             try
@@ -120,7 +122,7 @@ public partial class InfoEtudiant : System.Web.UI.Page
         int Interval = 0;
         bool bEnlever = false;
 
-        using (SqlConnection sqlConn0 = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn0 = new SqlConnection(ConnectionString))
         {
             sqlConn0.Open();
             DaysBeforeWithdrawal = int.Parse(ConfigurationManager.AppSettings["EnleverCoursLimiteJours"].ToString());
@@ -128,10 +130,10 @@ public partial class InfoEtudiant : System.Web.UI.Page
             Interval = Math.Abs(Interval);
             bEnlever = Interval <= DaysBeforeWithdrawal ? true : false;
         }
-        
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
-            
+
             // Loop through all records
             try
             {
@@ -158,7 +160,7 @@ public partial class InfoEtudiant : System.Web.UI.Page
                                 sDate = sDate.Substring(0, sDate.IndexOf(" "));
                         }
                         double dNoteSurCent = double.Parse(dt["NoteSurCent"].ToString());
-                        using (SqlConnection sqlConn2 = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+                        using (SqlConnection sqlConn2 = new SqlConnection(ConnectionString))
                         {
                             sqlConn2.Open();
                             if (dNoteSurCent == 0 && db.CoursAppartientASessionCourante(dt["CoursOffertID"].ToString(), sqlConn2))
@@ -191,7 +193,7 @@ public partial class InfoEtudiant : System.Web.UI.Page
                     }
                     returnedString += @"</table>";
                     LitCoursPris.Text = returnedString;
-                }                
+                }
             }
             catch (Exception ex)
             {
@@ -207,7 +209,7 @@ public partial class InfoEtudiant : System.Web.UI.Page
 
         lblCoursPrisHeader.Text = "Cours Déjà Suivis";  // Put in Web.Config
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             try
             {
@@ -275,7 +277,7 @@ public partial class InfoEtudiant : System.Web.UI.Page
         int Interval = 0;
 
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn0 = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn0 = new SqlConnection(ConnectionString))
         {
             sqlConn0.Open();
             DaysBeforeWithdrawal = int.Parse(ConfigurationManager.AppSettings["EnleverCoursLimiteJours"].ToString());
@@ -283,7 +285,7 @@ public partial class InfoEtudiant : System.Web.UI.Page
             Interval = Math.Abs(Interval);
             bEnlever = Interval <= DaysBeforeWithdrawal ? true : false;
         }
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             try
             {
@@ -292,7 +294,7 @@ public partial class InfoEtudiant : System.Web.UI.Page
                 int diffStart;
                 int diffEnd;
 
-                using (SqlConnection sqlConn2 = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+                using (SqlConnection sqlConn2 = new SqlConnection(ConnectionString))
                 {
                     try
                     {
@@ -329,7 +331,7 @@ public partial class InfoEtudiant : System.Web.UI.Page
                             " AND C.NumeroCours <> 'NOP' AND C.Actif = 1 AND CO.Actif = 1 AND ExamenEntree = 0 AND " +
                             " (CoursPreRequis = 'NOP' OR CoursPreRequis in (SELECT NumeroCours FROM CoursPris  " +
                             " WHERE PersonneID = '{0}' AND (NoteSurCent >= NotePassage OR Waiver = 1)) ) ORDER BY C.NomCours", sPersonneID);
-                        using (SqlConnection sqlConn3 = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+                        using (SqlConnection sqlConn3 = new SqlConnection(ConnectionString))
                         {
                             bool dejaInscrit = false, dejaReussi = false;
                             try
@@ -343,7 +345,7 @@ public partial class InfoEtudiant : System.Web.UI.Page
                                     returnedString += @"<thead><tr><th>Numéro</th><th>Titre</th></thead><tbody>";
                                     while (dt.Read())
                                     {
-                                        using (SqlConnection sqlConn4 = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+                                        using (SqlConnection sqlConn4 = new SqlConnection(ConnectionString))
                                         {
                                             sqlConn4.Open();
                                             dejaInscrit = db.EtudiantDejaInscrit(sPersonneID, dt["NumeroCours"].ToString(), sqlConn4);
@@ -416,7 +418,7 @@ public partial class InfoEtudiant : System.Web.UI.Page
     protected void btnReactiver_Click(object sender, EventArgs e)
     {
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             try
             {
@@ -457,5 +459,10 @@ public partial class InfoEtudiant : System.Web.UI.Page
     protected void btnHoraireSessionCourante_Click(object sender, EventArgs e)
     {
         Response.Redirect("HoraireSessionCourante.aspx?PersonneID=" + txtPersonneID.Text);
+    }
+
+    protected void btnSetWaiver_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("SetWaiver.aspx?PersonneID=" + txtPersonneID.Text);
     }
 }

@@ -11,6 +11,7 @@ using System.Diagnostics;
 
 public partial class Enregistrement : System.Web.UI.Page
 {
+    string ConnectionString = XCryptEngine.ConnectionStringEncryption.Decrypt(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -26,7 +27,7 @@ public partial class Enregistrement : System.Web.UI.Page
 
         try
         {
-            SqlConnection myConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
+            SqlConnection myConnection = new SqlConnection(ConnectionString);
             String sSql = @"SELECT * FROM Personnes ORDER BY Nom, Prenom";
 
             SqlDataAdapter da = new SqlDataAdapter(sSql, myConnection);
@@ -48,7 +49,7 @@ public partial class Enregistrement : System.Web.UI.Page
     {
         try
         {
-            SqlConnection myConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
+            SqlConnection myConnection = new SqlConnection(ConnectionString);
             String sSql = @"SELECT CoursOfferts.CoursOffertsID, Convert(nvarchar, SessionDateDebut) + '/' + Convert(nvarchar, SessionDateFin) + '(' + SessionDescription + ')' AS Periode, " + 
                 " Cours.NumeroCours, CoursPreRequis  " + 
                 " FROM LesSessions, CoursOfferts, Cours  " +

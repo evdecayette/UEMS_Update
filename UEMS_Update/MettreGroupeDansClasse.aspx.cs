@@ -14,10 +14,11 @@ using WebGrease.Activities;
 public partial class MettreGroupeDansClasse : System.Web.UI.Page
 {
     DB_Access db = new DB_Access();
+    string ConnectionString = XCryptEngine.ConnectionStringEncryption.Decrypt(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
     protected void Page_Load(object sender, EventArgs e)
     {
         //DB_Access db = new DB_Access();
-        //using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        //using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         //{
         //    sqlConn.Open();
         //    String sql = String.Format("Select Montant,MD.SessionID from MontantsDus as MD, LesSessions as LS where MD.SessionID = LS.SessionID and LS.SessionCourante = 1 and MD.PersonneID = '{0}'", "F0E3D052-060C-4DA0-A2BD-72849772653D");
@@ -75,7 +76,7 @@ public partial class MettreGroupeDansClasse : System.Web.UI.Page
         //btnSauvegarder.Enabled = false;
         try
         {
-            SqlConnection myConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
+            SqlConnection myConnection = new SqlConnection(ConnectionString);
             String sSql = @"SELECT C.NomCours + ' (' + H.Jours + ' ' + H.HeureDebut + ' - ' + H.HeureFin + ')' AS NomCours, CO.NumeroCours, CO.CoursOffertID, CO.NotePassage " +
                 " FROM Cours C, CoursOfferts CO, Horaires H  " +
                 " WHERE C.NumeroCours = CO.NumeroCours AND CO.HoraireID = H.HoraireID AND CO.Actif = 1 " +
@@ -127,12 +128,12 @@ public partial class MettreGroupeDansClasse : System.Web.UI.Page
         lblError.Text = String.Empty;
         DateTime convertDate = new DateTime();
         lblNomCours.Text = "Choisissez les Etudiants et Cliquez Sauvegarder: " + NomCours;
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             try
             {
                 Hashtable NanKlassLaDeja = null;
-                using (SqlConnection sqlConn1 = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+                using (SqlConnection sqlConn1 = new SqlConnection(ConnectionString))
                 {
                     sqlConn1.Open();
                     NanKlassLaDeja = db.GetEtudiantsAlreadyIn(NumeroCours, sqlConn1);
@@ -214,7 +215,7 @@ public partial class MettreGroupeDansClasse : System.Web.UI.Page
         int diffStart = 0;
         int diffEnd;
         int DaysBeforeWithdrawal = 0;
-        using (SqlConnection sqlConn2 = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn2 = new SqlConnection(ConnectionString))
         {
             try
             {
@@ -249,7 +250,7 @@ public partial class MettreGroupeDansClasse : System.Web.UI.Page
         }
         else
         {
-            lblError.Text = "C\'est trop tard, vous ne pouvez pas ajouter nouveau etudiant dans les classes";
+            lblError.Text = "C\'est trop tard, vous ne pouvez pas ajouter nouveau étudiant dans les classes";
         }
     }
 
@@ -269,7 +270,7 @@ public partial class MettreGroupeDansClasse : System.Web.UI.Page
         String sPersonneID;
 
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             try
             {

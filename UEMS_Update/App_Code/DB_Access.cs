@@ -14,15 +14,15 @@ using System.Web;
 /// </summary>
 public class DB_Access : IDisposable
 {
+    private string ConnectionString = XCryptEngine.ConnectionStringEncryption.Decrypt(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
     private String mConnectionString;
-
     // Add property for error reporting:
     /// <summary>
     /// Constructeur
     /// </summary>
     public DB_Access()
     {
-        mConnectionString = ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString();
+        mConnectionString = ConnectionString;
     }
 
     /// <summary>
@@ -117,7 +117,7 @@ public class DB_Access : IDisposable
     public double GetMoyennePersonneID(String PersonneID)
     {
         String sQuery = String.Format("SELECT AVG(NoteSurCent) FROM CoursPris WHERE PersonneID = '{0}' AND NoteSurCent <> 0  AND NumeroCours NOT IN ('FRA001', 'MAT001', 'ANG001')", PersonneID);
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             try
             {
@@ -135,7 +135,7 @@ public class DB_Access : IDisposable
     public double GetMoyenneEdutiantID(String PersonneID)
     {
         String sQuery = String.Format("SELECT AVG(NoteSurCent) FROM CoursPris WHERE EtudiantID = {0} AND NoteSurCent <> 0  AND NumeroCours NOT IN ('FRA001', 'MAT001', 'ANG001')", PersonneID);
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             try
             {

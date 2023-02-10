@@ -13,6 +13,7 @@ using System.Threading;
 
 public partial class ReussiteEchecAnglais : System.Web.UI.Page
 {
+    string ConnectionString = XCryptEngine.ConnectionStringEncryption.Decrypt(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -27,7 +28,7 @@ public partial class ReussiteEchecAnglais : System.Web.UI.Page
 
         try
         {
-            SqlConnection myConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
+            SqlConnection myConnection = new SqlConnection(ConnectionString);
             String sSql = @"SELECT C.PersonneID, Nom, Prenom, Telephone1, IsNull(NIF, '') AS NIF, IsNull(DDN,'') AS DDN, CoursPrisID FROM Personnes P, CoursPris C " +
                 " WHERE P.PersonneID = C.PersonneID AND NumeroCours = 'ANG001' AND NoteSurCent = 0.0 AND CoursOffertID in " +
                 " (SELECT CoursOffertID FROM CoursOfferts C, LesSessions L WHERE C.SessionID = L.SessionID AND L.SessionCourante = 1) ORDER BY Nom, Prenom";
@@ -68,7 +69,7 @@ public partial class ReussiteEchecAnglais : System.Web.UI.Page
         Thread.Sleep(10);
 
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             try
             {

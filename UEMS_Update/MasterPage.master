@@ -125,6 +125,7 @@
                         <li>
                             <a href="default.aspx"><i class="fa fa-dashboard fa-fw"></i>Page de Bienvenue</a>
                         </li>
+                        
                         <li>
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>Nouveaux Etudiants<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -143,6 +144,18 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
+
+                        <!--Decayette's Code
+                            Button to show the required classes per discipline-->
+                         <li>
+                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>Cursus Par Discipline<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level" runat="server" id="lsCusus">
+                               
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <!--End Decayette's Code-->
+
                         <li>
                             <a href="ListeEtudiants.aspx"><i class="fa fa-table fa-fw"></i>Liste de Tous les Etudiants</a>
                         </li>                        

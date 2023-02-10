@@ -505,4 +505,31 @@ public class XCryptEngine
 		}
 
 	}
+
+    public static class ConnectionStringEncryption
+    {
+        private static readonly byte[] entropy = { 9, 8, 7, 6, 5 };
+
+        public static string Encrypt(string connectionString)
+        {
+            byte[] encryptedData = ProtectedData.Protect(
+                System.Text.Encoding.Unicode.GetBytes(connectionString),
+                entropy,
+                DataProtectionScope.LocalMachine
+            );
+
+            return Convert.ToBase64String(encryptedData);
+        }
+
+        public static string Decrypt(string encryptedConnectionString)
+        {
+            byte[] decryptedData = ProtectedData.Unprotect(
+                Convert.FromBase64String(encryptedConnectionString),
+                entropy,
+                DataProtectionScope.LocalMachine
+            );
+
+            return System.Text.Encoding.Unicode.GetString(decryptedData);
+        }
+    }
 }

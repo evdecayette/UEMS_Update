@@ -19,6 +19,8 @@ public partial class RapportEntrees : System.Web.UI.Page
     String sUserName = "spoteau", sDomain = "CCPAP1", sPass = "robenson22";
 #endif
 
+    string ConnectionString = XCryptEngine.ConnectionStringEncryption.Decrypt(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
+
     public const int LOGON32_LOGON_INTERACTIVE = 2;
     public const int LOGON32_PROVIDER_DEFAULT = 0;
 
@@ -95,7 +97,7 @@ public partial class RapportEntrees : System.Web.UI.Page
 
         try
         {
-            SqlConnection myConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
+            SqlConnection myConnection = new SqlConnection(ConnectionString);
             String sSql = @"SELECT 'Choisissez une Session' AS SessionNomComplet, -1 AS SessionID " +
                 " UNION SELECT SessionDescription + ' (' + CONVERT(nvarchar, SessionDateDebut) + ' - ' + " +
                 " CONVERT(NVARCHAR, SessionDateFin) + ')' AS SessionNomComplet, SessionID FROM LesSessions";
@@ -126,7 +128,7 @@ public partial class RapportEntrees : System.Web.UI.Page
 
         try
         {
-            SqlConnection myConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
+            SqlConnection myConnection = new SqlConnection(ConnectionString);
             String sSql = @"SELECT 'Choisissez une Session' AS SessionNomComplet, -1 AS SessionID " +
                 " UNION SELECT SessionDescription + ' (' + CONVERT(nvarchar, SessionDateDebut) + ' - ' + CONVERT(NVARCHAR, SessionDateFin) + ')' AS SessionNomComplet, SessionID FROM LesSessions";
 
@@ -153,7 +155,7 @@ public partial class RapportEntrees : System.Web.UI.Page
 
         try
         {
-            SqlConnection myConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
+            SqlConnection myConnection = new SqlConnection(ConnectionString);
             String sSql = @"SELECT 'Choisissez un Utilisateur' as RecuParUserName " +
                 " UNION SELECT RecuParUserName FROM MontantsRecus GROUP BY RecuParUserName ORDER BY RecuParUserName";
 
@@ -180,7 +182,7 @@ public partial class RapportEntrees : System.Web.UI.Page
 
         try
         {
-            SqlConnection myConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
+            SqlConnection myConnection = new SqlConnection(ConnectionString);
             String sSql = @"SELECT 'Choisissez un Cours' AS NomCours, -1 AS CoursOffertID, 'AAA000' AS NumeroCours " +
                 " UNION SELECT CO.NumeroCours + ' - ' + C.NomCours, CoursOffertID AS NomCours, CO.NumeroCours FROM CoursOfferts CO, Cours C  " +
                 " WHERE CO.NumeroCours = C.NumeroCours AND CO.Actif = 1 ORDER BY NumeroCours ";
@@ -333,7 +335,7 @@ public partial class RapportEntrees : System.Web.UI.Page
                 " AND C.ExamenEntree = 0 ORDER BY C.NumeroCours, CO.HoraireID, P.Nom, P.Prenom";
         }
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             int iError = 0;
             int nombreEtudiants = 0;
@@ -538,7 +540,7 @@ public partial class RapportEntrees : System.Web.UI.Page
                 " AND C.ExamenEntree = 0 ORDER BY C.NumeroCours, CO.HoraireID, P.Nom, P.Prenom";
         }
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             int iError = 0;
             int nombreEtudiants = 0;
@@ -718,7 +720,7 @@ public partial class RapportEntrees : System.Web.UI.Page
         //    " FROM CoursOfferts WHERE SessionID IN (SELECT SessionID FROM LesSessions WHERE SessionCourante = 1)) " +
         //    " AND NumeroCours NOT IN ('FRA001','MAT001','ANG001') GROUP BY PersonneID";
 
-        //DB_Access db = new DB_Access(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString());
+        //DB_Access db = new DB_Access(ConnectionString);
         ////Get List of current students with the number of classes registered
         //Hashtable htListeDesEtudiants = new Hashtable();
 
@@ -877,7 +879,7 @@ public partial class RapportEntrees : System.Web.UI.Page
             " ORDER BY NumeroJour, Ordre";
 
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             int iError = 0;
 
@@ -906,7 +908,7 @@ public partial class RapportEntrees : System.Web.UI.Page
                                 // Creer Header
                                 worksheet.Cell(1, 1).Value = "UNIVERSITE ESPOIR";
                                 worksheet.Cell(2, 1).Value = "Horaire des Cours";
-                                using (SqlConnection sqlConn2 = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+                                using (SqlConnection sqlConn2 = new SqlConnection(ConnectionString))
                                 {
                                     sqlConn2.Open();
                                     worksheet.Cell(3, 1).Value = "Session : " + db.GetStartDateOfCurrentSession(sqlConn2).ToString("dd-MMM-yyyy")
@@ -1071,7 +1073,7 @@ public partial class RapportEntrees : System.Web.UI.Page
                 " AND C.ExamenEntree = 0 ORDER BY C.NumeroCours, CO.HoraireID, P.Nom, P.Prenom";
         }
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             int iError = 0;
             int nombreEtudiants = 0;
@@ -1092,7 +1094,7 @@ public partial class RapportEntrees : System.Web.UI.Page
                     SqlDataReader dt = db.GetDataReader(sSql, sqlConn);
                     if (dt != null)
                     {
-                        using (SqlConnection sqlConn2 = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+                        using (SqlConnection sqlConn2 = new SqlConnection(ConnectionString))
                         {
                             sqlConn2.Open();
                             sSessionStartDate = db.GetStartDateOfCurrentSession(sqlConn2).ToString("dd-MMM-yyyy");

@@ -12,7 +12,7 @@ public partial class ReleveNotesEtudiant : System.Web.UI.Page
     String sPersonneID = "";
     String sSql = "";
     HashSet<Notation> getNotesScheme = null;
-
+    string ConnectionString = XCryptEngine.ConnectionStringEncryption.Decrypt(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -39,7 +39,7 @@ public partial class ReleveNotesEtudiant : System.Web.UI.Page
         Dictionary<string, ReleveNotes> dictionaryNotes = new Dictionary<string, ReleveNotes>();
         sPersonneID = txtPersonneID.Text.ToString();
 
-        using (SqlConnection sqlConn0 = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn0 = new SqlConnection(ConnectionString))
         {
             DB_Access db0 = new DB_Access();
             try
@@ -60,7 +60,7 @@ public partial class ReleveNotesEtudiant : System.Web.UI.Page
         }
 
         string sDisciplineDeclaree;
-        using (SqlConnection sqlConn1 = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn1 = new SqlConnection(ConnectionString))
         {
             try
             {
@@ -76,7 +76,7 @@ public partial class ReleveNotesEtudiant : System.Web.UI.Page
         }
 
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             try
             {
@@ -292,7 +292,7 @@ public partial class ReleveNotesEtudiant : System.Web.UI.Page
     //    // Tble tuff
     //    String sTableTitle = String.Empty;
 
-    //    DB_Access db = new DB_Access(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString());
+    //    DB_Access db = new DB_Access(ConnectionString);
     //    try
     //    {
     //        SqlConnection myConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
@@ -712,7 +712,7 @@ public partial class ReleveNotesEtudiant : System.Web.UI.Page
 //        string sFileName = "error";
 
 //        DB_Access db = new DB_Access();
-//        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+//        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
 //        {
 //            sPersonneID = txtPersonneID.Text;
 //            if (sPersonneID.Trim() == String.Empty)
@@ -947,11 +947,11 @@ public partial class ReleveNotesEtudiant : System.Web.UI.Page
     //    String nomEtudiant = "";
 
     //    DB_Access db = new DB_Access();
-    //    using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+    //    using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
     //    {
     //        try
     //        {
-    //            using (SqlConnection sqlConn1 = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+    //            using (SqlConnection sqlConn1 = new SqlConnection(ConnectionString))
     //            {
     //                try
     //                {

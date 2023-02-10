@@ -11,6 +11,7 @@ using System.Diagnostics;
 
 public partial class RapportPourSession : System.Web.UI.Page
 {
+    string ConnectionString = XCryptEngine.ConnectionStringEncryption.Decrypt(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -26,7 +27,7 @@ public partial class RapportPourSession : System.Web.UI.Page
         String sDateTo = "", sDateFrom = "";
 
         DB_Access db = new DB_Access();
-        using (SqlConnection sqlConn = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+        using (SqlConnection sqlConn = new SqlConnection(ConnectionString))
         {
             try
             {
@@ -38,7 +39,7 @@ public partial class RapportPourSession : System.Web.UI.Page
                     return "Erreur : Username !!!";
                 }
 
-                using (SqlConnection sqlConn1 = new SqlConnection(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ToString()))
+                using (SqlConnection sqlConn1 = new SqlConnection(ConnectionString))
                 {
                     String sSql1 = String.Format("SELECT * FROM LesSessions WHERE SessionID = {0}", sSessionID);
                     sqlConn1.Open();
