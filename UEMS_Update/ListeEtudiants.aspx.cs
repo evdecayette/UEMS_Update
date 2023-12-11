@@ -10,6 +10,7 @@ using System.Diagnostics;
 
 public partial class ListeEtudiants : System.Web.UI.Page
 {
+   // string ConnectionStrings = XCryptEngine.ConnectionStringEncryption.Encrypt(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
     string ConnectionString = XCryptEngine.ConnectionStringEncryption.Decrypt(ConfigurationManager.ConnectionStrings["uespoir_connectionString"].ConnectionString);
 
     protected void Page_Load(object sender, EventArgs e)

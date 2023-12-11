@@ -16,6 +16,7 @@
                     <asp:Button ID="btnEditer" runat="server" Width="150" Text="Editer Etudiant" class="btn btn-outline btn-primary" OnClick="btnEditer_Click" />
                     <asp:Button ID="btnReactiver" runat="server" Width="150" Text="Réactiver Etudiant" class="btn btn-outline btn-primary" Visible="false" OnClick="btnReactiver_Click"/>
                     <asp:Button ID="btnSetWaiver" runat="server" Width="150" Text="Waiver" class="btn btn-outline btn-primary" OnClick="btnSetWaiver_Click"/>
+                    <asp:Button ID="btnVoirDossiers" runat="server" Width="150" Text="Voir Les Dossier" class="btn btn-outline btn-primary" OnClick="btnVoirDossiers_Click"/>
                     <asp:TextBox ID="txtPersonneID" runat="server" Visible="false"></asp:TextBox>
                     <hr />
                 </div>              

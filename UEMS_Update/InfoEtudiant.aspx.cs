@@ -465,4 +465,9 @@ public partial class InfoEtudiant : System.Web.UI.Page
     {
         Response.Redirect("SetWaiver.aspx?PersonneID=" + txtPersonneID.Text);
     }
+
+    protected void btnVoirDossiers_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("VoirLesDocumentsPourUnEtudiant.aspx?PersonneID=" + txtPersonneID.Text);
+    }
 }
